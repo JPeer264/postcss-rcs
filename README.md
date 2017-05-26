@@ -1,6 +1,7 @@
 # postcss-rcs
 
 [![Build Status](https://travis-ci.org/JPeer264/postcss-rcs.svg?branch=master)](https://travis-ci.org/JPeer264/postcss-rcs)
+[![Coverage Status](https://coveralls.io/repos/github/JPeer264/postcss-rcs/badge.svg?branch=master)](https://coveralls.io/github/JPeer264/postcss-rcs?branch=master)
 
 > The PostCSS plugin for [rcs-core](https://github.com/JPeer264/node-rcs-core)
 
