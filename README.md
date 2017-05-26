@@ -27,7 +27,7 @@ See [PostCSS](https://github.com/postcss/postcss) docs for examples for your env
 
 ## What does it do
 
-```js
+```css
 @keyframes move {
   from {}
   to {}
@@ -52,7 +52,7 @@ ul li {
 
 will be processed to:
 
-```js
+```css
 @keyframes move {
   from {}
   to {}
