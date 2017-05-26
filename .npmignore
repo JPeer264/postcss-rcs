@@ -1,0 +1,7 @@
+index.js
+.nyc_output
+npm-debug.log
+coverage
+test
+test.js
+.vscode
