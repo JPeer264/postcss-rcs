@@ -162,7 +162,7 @@ will be process to:
 
 ### prefix
 
-Prefixes every selectors and attribute selectors (if `ignoreAttributeSelector` is `true`).
+Prefixes every selectors and attribute selectors (if `ignoreAttributeSelector` is `false`).
 
 Type: `string`
 
@@ -184,7 +184,7 @@ will be process to:
 
 ### suffix
 
-Suffixes every selectors and attribute selectors (if `ignoreAttributeSelector` is `true`).
+Suffixes every selectors and attribute selectors (if `ignoreAttributeSelector` is `false`).
 
 Type: `string`
 
