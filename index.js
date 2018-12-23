@@ -3,7 +3,7 @@ import rcs from 'rcs-core';
 
 const replaceCssSelector = (match) => {
   const result = rcs.selectorLibrary.get(match, {
-    isSelectors: true,
+    addSelectorType: true,
   });
 
   return result;
@@ -13,30 +13,22 @@ const postcssRcs = postcss.plugin('rcs', (options = {}) => (
   (root) => {
     const data = root.toString();
 
-    // fill libraries
-    if (!options.ignoreAttributeSelector) {
-      rcs.selectorLibrary.setAttributeSelector(data.match(rcs.replace.regex.attributeSelectors));
-    }
-
-    if (options.replaceKeyframes) {
-      rcs.keyframesLibrary.fillLibrary(data);
-    }
-
-    rcs.selectorLibrary.fillLibrary(data, options);
+    rcs.fillLibraries(data, options);
 
     // do a regex of all setted attributes
     const regexOfAllSelectors = rcs.selectorLibrary.getAll({
-      origValues: true,
+      addSelectorType: true,
       regexCss: true,
-      isSelectors: true,
     });
 
     root.walkRules((rule) => {
       // * --------------------------- *
       // * replace selector attributes *
       // * --------------------------- *
-      if (!options.ignoreAttributeSelector) {
-        rule.selector = rule.selector.replace(rcs.replace.regex.attributeSelectors, (match) => {
+      const replaceEscapes = /\\/g;
+
+      if (!options.ignoreAttributeSelectors) {
+        rule.selector = rule.selector.replace(replaceEscapes, '').replace(rcs.replace.regex.attributeSelectors, (match) => {
           const re = new RegExp(rcs.replace.regex.attributeSelectors);
           const exec = re.exec(match);
           const stringChar = exec[3].charAt(0);
@@ -64,7 +56,7 @@ const postcssRcs = postcss.plugin('rcs', (options = {}) => (
       // * ----------------- *
       // * replace selectors *
       // * ----------------- *
-      rule.selector = rule.selector.replace(regexOfAllSelectors, replaceCssSelector);
+      rule.selector = rule.selector.replace(replaceEscapes, '').replace(regexOfAllSelectors, replaceCssSelector);
     });
 
     // * ----------------- *
@@ -77,7 +69,7 @@ const postcssRcs = postcss.plugin('rcs', (options = {}) => (
           return;
         }
 
-        atRule.params = atRule.params.replace(/[a-zA-Z-_]+/g, match => rcs.keyframesLibrary.get(match));
+        atRule.params = atRule.params.replace(/[a-zA-Z-_]+/g, match => rcs.keyframesLibrary.get(match, { addSelectorType: true }));
       });
 
       // animation | animation-name
@@ -86,8 +78,9 @@ const postcssRcs = postcss.plugin('rcs', (options = {}) => (
           return;
         }
 
-        decl.value = decl.value.replace(rcs.replace.regex.matchFirstWord, match => (
-          rcs.keyframesLibrary.get(match)
+        // match the first word
+        decl.value = decl.value.replace(/[a-zA-Z0-9-_]+/, match => (
+          rcs.keyframesLibrary.get(match, { addSelectorType: true })
         ));
       });
     }

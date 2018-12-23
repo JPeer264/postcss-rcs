@@ -5,27 +5,20 @@ import rcs from 'rcs-core';
 import postcssRcs from './index';
 
 const replaceKeyframes = postcssRcs({ replaceKeyframes: true });
-const ignoreAttributeSeletor = postcssRcs({ ignoreAttributeSelector: true });
+const ignoreAttributeSeletor = postcssRcs({ ignoreAttributeSelectors: true });
 const prefix = postcssRcs({ prefix: 'pre-' });
 const suffix = postcssRcs({ suffix: '-suf' });
 const presuf = postcssRcs({ prefix: 'pre-', suffix: '-suf' });
 const keyframesAndAttributeSelectors = postcssRcs({
-  ignoreAttributeSelector: true,
+  ignoreAttributeSelectors: true,
   replaceKeyframes: true,
 });
 
 test.beforeEach(() => {
-  // reset counter and selectors for tests
-  rcs.selectorLibrary.selectors = {};
-  rcs.selectorLibrary.attributeSelectors = {};
-  rcs.selectorLibrary.compressedSelectors = {};
-  rcs.selectorLibrary.excludes = [];
-
-  rcs.keyframesLibrary.excludes = [];
-  rcs.keyframesLibrary.keyframes = {};
-  rcs.keyframesLibrary.compressedKeyframes = {};
-
-  rcs.nameGenerator.resetCountForTests();
+  rcs.nameGenerator.setAlphabet('#abcdefghijklmnopqrstuvwxyz');
+  rcs.nameGenerator.reset();
+  rcs.selectorLibrary.reset();
+  rcs.keyframesLibrary.reset();
 });
 
 test('generell rename test', (t) => {
@@ -191,7 +184,7 @@ test('prefix suffix and selector attributes', (t) => {
     }
   `;
   const expectedResult = `
-    .pre-a-suf.pre-selector-suf {
+    .pre-a-suf.pre-tctor-suf {
         border: 1px solid black;
     }
 
@@ -277,6 +270,23 @@ test('ignore attribute selector and set keyframes', (t) => {
   `;
 
   const result = postcss([keyframesAndAttributeSelectors]).process(input);
+
+  t.is(result.css, expectedResult);
+});
+
+test('replace escaped selectors', (t) => {
+  const input = `
+    .main.selector\\:test:after {
+        border: 1px solid black;
+    }
+  `;
+  const expectedResult = `
+    .a.b:after {
+        border: 1px solid black;
+    }
+  `;
+
+  const result = postcss([ignoreAttributeSeletor]).process(input);
 
   t.is(result.css, expectedResult);
 });

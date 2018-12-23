@@ -84,7 +84,7 @@ postcss([ require('postcss-simple-vars')({ replaceKeyframes: true }) ])
 ```
 
 - [replaceKeyframes](#replacekeyframes)
-- [ignoreAttributeSelector](#ignoreattributeselector)
+- [ignoreAttributeSelectors](#ignoreattributeselectors)
 - [prefix](#prefix)
 - [suffix](#suffix)
 
@@ -126,7 +126,7 @@ will be processed to:
 }
 ```
 
-### ignoreAttributeSelector
+### ignoreAttributeSelectors
 
 If set to `true` it does not care about attribute selectors. If set to `false` the attribute selector `[class$="lector"]` will not rename `.selector` as it the class ends with `lector`.
 
@@ -136,7 +136,7 @@ Default: `false`
 
 Example:
 
-**{ ignoreAttributeSelector: false }**
+**{ ignoreAttributeSelectors: false }**
 ```css
 .move[class$="lector"] {}
 .selector {}
@@ -148,7 +148,7 @@ will be process to:
 .selector {}
 ```
 
-**{ ignoreAttributeSelector: true }**
+**{ ignoreAttributeSelectors: true }**
 ```css
 .move[class$="lector"] {}
 .selector {}
@@ -162,7 +162,7 @@ will be process to:
 
 ### prefix
 
-Prefixes every selectors and attribute selectors (if `ignoreAttributeSelector` is `false`).
+Prefixes every selectors and attribute selectors (if `ignoreAttributeSelectors` is `false`).
 
 Type: `string`
 
@@ -170,21 +170,21 @@ Default: `''`
 
 Example:
 ```css
-// { ignoreAttributeSelector: false, prefix: 'pre-' }
+// { ignoreAttributeSelectors: false, prefix: 'pre-' }
 .move[class^="sel"] {}
 .selector {}
 ```
 
 will be process to:
 ```css
-// { ignoreAttributeSelector: false, prefix: 'pre-' }
+// { ignoreAttributeSelectors: false, prefix: 'pre-' }
 .pre-a[class^="pre-sel"] {}
 .pre-selector {}
 ```
 
 ### suffix
 
-Suffixes every selectors and attribute selectors (if `ignoreAttributeSelector` is `false`).
+Suffixes every selectors and attribute selectors (if `ignoreAttributeSelectors` is `false`).
 
 Type: `string`
 
@@ -192,14 +192,14 @@ Default: `''`
 
 Example:
 ```css
-// { ignoreAttributeSelector: false, suffix: '-suf' }
+// { ignoreAttributeSelectors: false, suffix: '-suf' }
 .move[class$="lector"] {}
 .selector {}
 ```
 
 will be process to:
 ```css
-// { ignoreAttributeSelector: false, suffix: '-suf' }
+// { ignoreAttributeSelectors: false, suffix: '-suf' }
 .a-suf[class$="lector-suf"] {}
 .selector-suf {}
 ```

@@ -42,7 +42,7 @@
   "homepage": "https://github.com/jpeer264/postcss-rcs#readme",
   "dependencies": {
     "postcss": "^6.0.1",
-    "rcs-core": "^0.11.0"
+    "rcs-core": "^2.4.3"
   },
   "devDependencies": {
     "ava": "^0.18.2",
