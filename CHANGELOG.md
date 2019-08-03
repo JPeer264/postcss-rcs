@@ -1,3 +1,7 @@
+2.0.1 - August, 03 2019
+
+* 8e37705 Chore: change rcs-core and postcss as peerDependency (JPeer264)
+
 2.0.0 - December, 23 2018
 
 * db97c07 Chore: upgrade dependencies (JPeer264)
